@@ -1,0 +1,20 @@
+uuid: 3fff4756-a7fe-44a0-8cd9-467d66f2551f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_grocery_estimated_price
+field_name: field_grocery_estimated_price
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

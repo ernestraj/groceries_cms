@@ -1,0 +1,8 @@
+uuid: 3711fcfb-3fa0-454a-81fb-5f71f5d16f38
+langcode: en
+status: true
+dependencies: {  }
+name: 'Store Location'
+vid: store_location
+description: ''
+weight: 0

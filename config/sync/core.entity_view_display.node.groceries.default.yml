@@ -1,0 +1,40 @@
+uuid: a7d340e0-0387-41a5-8479-86c781f13efb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.groceries.field_grocery_description
+    - field.field.node.groceries.field_grocery_estimated_price
+    - node.type.groceries
+  module:
+    - text
+    - user
+id: node.groceries.default
+targetEntityType: node
+bundle: groceries
+mode: default
+content:
+  field_grocery_description:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_grocery_estimated_price:
+    weight: 102
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

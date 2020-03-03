@@ -1,0 +1,23 @@
+uuid: 2d1397ed-faac-4373-b1ea-1ff83b3a8165
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_grocery_estimated_price
+    - node.type.groceries
+id: node.groceries.field_grocery_estimated_price
+field_name: field_grocery_estimated_price
+entity_type: node
+bundle: groceries
+label: 'Grocery Estimated Price'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

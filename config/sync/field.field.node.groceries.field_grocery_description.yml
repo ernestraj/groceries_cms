@@ -1,0 +1,21 @@
+uuid: 7c8d83b7-e442-4ad3-9da9-ca16461087cc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_grocery_description
+    - node.type.groceries
+  module:
+    - text
+id: node.groceries.field_grocery_description
+field_name: field_grocery_description
+entity_type: node
+bundle: groceries
+label: 'Grocery Description'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

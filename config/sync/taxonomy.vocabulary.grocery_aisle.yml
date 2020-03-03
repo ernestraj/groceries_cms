@@ -1,0 +1,8 @@
+uuid: 35148d52-1010-45cc-b5da-c87eadb9cb43
+langcode: en
+status: true
+dependencies: {  }
+name: 'Grocery Aisle'
+vid: grocery_aisle
+description: ''
+weight: 0
