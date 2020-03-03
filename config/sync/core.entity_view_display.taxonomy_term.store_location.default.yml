@@ -1,0 +1,30 @@
+uuid: 61a687fb-e02a-4972-9106-7eb9de744475
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.store_location.field_grocery_store_address
+    - taxonomy.vocabulary.store_location
+  module:
+    - address
+    - text
+id: taxonomy_term.store_location.default
+targetEntityType: taxonomy_term
+bundle: store_location
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_grocery_store_address:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: address_default
+    region: content
+hidden: {  }
