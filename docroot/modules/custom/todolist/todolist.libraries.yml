@@ -1,0 +1,7 @@
+todolist:
+  version: VERSION
+  js:
+    js/todolist.js: { preprocess: false }
+  dependencies:
+    - core/drupal
+    - core/jquery

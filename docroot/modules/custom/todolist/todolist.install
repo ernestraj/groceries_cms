@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * Implement hook_schema
+ */
+function todolist_schema()
+{
+  $schema['todo'] = [
+    'description' => 'The table for storing the items of todo list for each user.',
+    'fields' => [
+      'id' => [
+        'description' => 'The primary identifier of a todo item.',
+        'type' => 'serial',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'uid' => [
+        'description' => 'User Id.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'name' => [
+        'description' => 'Name of ToDo item',
+        'type' => 'varchar',
+        'length' => 512,
+        'not null' => TRUE,
+      ],
+      'completed' => [
+        'description' => 'Status(1=completed,0=In Progress].',
+        'type' => 'int',
+        'length' => 1,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

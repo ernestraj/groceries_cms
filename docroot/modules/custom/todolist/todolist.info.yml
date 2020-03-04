@@ -1,0 +1,5 @@
+name: To Do List
+description: This is the module being developed for creating todolist in Drupal
+package: Custom
+type: module
+core: 8.x

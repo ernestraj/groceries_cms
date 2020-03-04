@@ -1,0 +1,7 @@
+todolist.form:
+  path: "todolist"
+  defaults:
+    _title: "To Do List Form"
+    _form: '\Drupal\todolist\Form\ToDoListForm'
+  requirements:
+    _role: "authenticated"
