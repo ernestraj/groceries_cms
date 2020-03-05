@@ -4,9 +4,35 @@ namespace Drupal\todolist\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Database\Connection;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ToDoListForm extends FormBase
 {
+  /**
+   * The database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $connection;
+
+
+  /**
+   * @param \Drupal\Core\Database\Connection $connection
+   *   The Connection object.
+   */
+  public function __construct(Connection $connection)
+  {
+    $this->connection = $connection;
+  }
+
+  public static function create(ContainerInterface $container)
+  {
+    return new static(
+      $container->get('database')
+    );
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -23,16 +49,55 @@ class ToDoListForm extends FormBase
 
     $form['#tree'] = TRUE;
 
-    $form['todo_item'] = [
+    $form['todo_item_list'] = [
+      '#type' => 'fieldset',
+      '#prefix' => '<div id="edit-todo">',
+      '#suffix' => '</div>'
+    ];
+
+    $form['todo_item_list']['todo_item'] = [
       '#type' => 'textfield',
       '#attributes' => [
         'placeholder' => 'Please enter your todo item here'
-      ],
-      "#required" => TRUE
+      ]
     ];
+    $items = $this->getAllToDoItemList();
+    if ($items) {
+      foreach ($items as $key => $item) {
+        $markup = $this->getItemMarkup($item);
+        $class = $item['completed'] == 0 ? 'active' : 'inactive';
+        $form['todo_item_list']['item_list'][$key]['item'] = [
+          '#type' => 'markup',
+          '#markup' => $markup,
+          '#prefix' => '<div class= "' . $class . '">'
+        ];
+        $form['todo_item_list']['item_list'][$key]['actions'] = [
+          '#type' => 'actions',
+        ];
+        $form['todo_item_list']['item_list'][$key]['actions']['complete'] = [
+          '#type' => 'button',
+          '#value' => $this->t('Complete'),
+          '#attributes' => [
+            'id' => 'complete-' . $item['id'],
+            'class' => ['todo-completed']
+          ]
+        ];
+        $form['todo_item_list']['item_list'][$key]['actions']['edit'] = [
+          '#type' => 'submit',
+          '#value' => $this->t('Edit')
+        ];
+        $form['todo_item_list']['item_list'][$key]['actions']['delete'] = [
+          '#type' => 'submit',
+          '#value' => $this->t('Delete'),
+          '#suffix' => '</div>'
+        ];
+      }
+    }
+
     $form['acions'] = [
       '#type' => 'acions'
     ];
+
     $form['acions']['add'] = [
       "#type" => "submit",
       "#value" => $this->t("Add To Do Item"),
@@ -43,46 +108,33 @@ class ToDoListForm extends FormBase
       ]
     ];
 
-    // $form['todo_item_list']['actions'] = ['#type' => "actions"];
-    // $form['todo_item_list']['actions']['add_more'] = [
-    //   '#type' => 'submit',
-    //   '#value' => $this->t('Add More'),
-    //   '#submit' => ['::addMore'],
-    //   '#ajax' => [
-    //     'callback' => '::add_more_todo_items',
-    //     'wrapper' => 'todo-item-list-wrapper',
-    //   ],
-    // ];
-
-    // if ($count > 1) {
-    //   $form['todo_item_list']['actions']['remove'] = [
-    //     '#type' => 'submit',
-    //     '#value' => $this->t('Remove'),
-    //     '#submit' => ['::removeCallback'],
-    //     '#ajax' => [
-    //       'callback' => '::add_more_todo_items',
-    //       'wrapper' => 'todo-item-list-wrapper',
-    //     ],
-    //   ];
-    // }
-
     $form['#attached']['library'][] = 'todolist/todolist';
-    $form_state->set('todo_item', $count);
     return $form;
   }
 
-  /**
-   * Submit handler for the "add-one-more" button.
-   *
-   * Increments the max counter and causes a rebuild.
-   */
-  public function addMore(array &$form, FormStateInterface $form_state)
+  public function completeToDoValue(array &$form, FormStateInterface $form_state)
   {
-    $todo = $form_state->get('todo_item');
-    $add_button = $todo + 1;
-    $form_state->set('todo_item', $add_button);
+    print_r($form_state->getValues());
+    die;
+  }
 
-    $form_state->setRebuild();
+  public function getItemMarkup($item)
+  {
+    $markup .= '<div class="item">';
+    $markup .= $item['name'];
+    $markup .= "</div>";
+
+    return $markup;
+  }
+
+  public function getAllToDoItemList()
+  {
+    $result = $this->connection->select('todo', 'td')->fields('td')->execute()->fetchAll($fetch = \PDO::FETCH_ASSOC);
+    if (!empty($result)) {
+      return $result;
+    } else {
+      return FALSE;
+    }
   }
 
   public function add_more_todo_items(array &$form, FormStateInterface $form_state)
@@ -90,23 +142,13 @@ class ToDoListForm extends FormBase
     return $form['todo_item_list'];
   }
 
-  public function removeCallback(array &$form, FormStateInterface $form_state)
-  {
-    $todo = $form_state->get('todo_item');
-    if ($todo > 1) {
-      $remove_button = $todo - 1;
-      $form_state->set('todo_item', $remove_button);
-    }
-    // Since our buildForm() method relies on the value of 'num_names' to
-    // generate 'name' form elements, we have to tell the form to rebuild. If we
-    // don't do this, the form builder will not call buildForm().
-    $form_state->setRebuild();
-  }
-
   public function addToDoValue(array &$form, FormStateInterface $form_state)
   {
-    print_r($form_state->getValues());
-    die;
+    $values = $form_state->getValues();
+    if (!empty($values['todo_item_list']['todo_item'])) {
+      $uid = \Drupal::currentUser()->id();
+      $result = $this->connection->insert('todo')->fields(['uid' => $uid, 'name' => $values['todo_item_list']['todo_item']])->execute();
+    }
 
     $form_state->setRebuild();
   }
