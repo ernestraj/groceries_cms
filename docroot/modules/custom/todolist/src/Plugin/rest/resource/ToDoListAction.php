@@ -2,22 +2,18 @@
 
 namespace Drupal\todolist\Plugin\rest\resource;
 
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Provides a resource to get view modes by entity and bundle.
  *
- * @RestResource(
+ * @RestResource (
  *   id = "todolistaction",
  *   label = @Translation("To Do List Rest Resource"),
  *   uri_paths = {
- *     "canonical" = "todolist/delete"
- *     "https://www.drupal.org/link-relations/create" = "todolist/completed"
+ *     "canonical" = "todolist/actions"
  *   }
  * )
  */
@@ -25,37 +21,36 @@ class ToDoListAction extends ResourceBase
 {
 
   /**
-   * {@inheritdoc}
+   * Responds to delete requests.
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
+
+  public function delete($data)
   {
-    die('hello');
+    $database = \Drupal::database();
+    $result = $database->delete('todo')->condition('id', $data['delete'])->execute();
+    if ($result) {
+      return new JsonResponse(['operation' => 'completed']);
+    } else {
+      return new JsonResponse(['operation' => 'error']);
+    }
   }
 
   /**
-   * Responds to GET requests.
-   *
-   * Returns a list of bundles for specified entity.
-   *
-   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-   *   Throws exception expected.
+   *  Responds to put requests.
    */
-  public function get()
+  public function put($data)
   {
-    $response = 'hello world';
-    return new ResourceResponse($response);
-  }
-
-  public function post(array $data = [])
-  {
-    $response = array(
-      "hello_world" => $data,
-    );
-    return new ResourceResponse($response);
-  }
-
-  public function patch($arg)
-  {
-    return new ResourceResponse('hello patch');
+    $database = \Drupal::database();
+    $id = $data['completed'];
+    $status = 0;
+    if ($data['operation'] == "complete") {
+      $status = 1;
+    }
+    $result = $database->update('todo')->fields(['completed' => $status])->condition('id', $id)->execute();
+    if ($result) {
+      return new ResourceResponse(['operation' => 'completed']);
+    } else {
+      return new ResourceResponse(['operation' => 'error']);
+    }
   }
 }
