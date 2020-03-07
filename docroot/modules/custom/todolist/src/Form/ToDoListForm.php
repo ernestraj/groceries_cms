@@ -6,8 +6,6 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Database\Connection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ReplaceCommand;
 
 class ToDoListForm extends FormBase
 {
@@ -74,45 +72,80 @@ class ToDoListForm extends FormBase
     ];
     $items = $this->getAllToDoItemList();
     if ($items) {
+      $list_form = [];
+      $edit_items = $form_state->get('edit_items');
       foreach ($items as $key => $item) {
-        $markup = $this->getItemMarkup($item);
-        $class = "todo-item";
-        $class .= $item['completed'] == 0 ? '' : ' inactive';
-        $form['todo_item_list']['item_list'][$item['id']]['item'] = [
-          '#type' => 'markup',
-          '#markup' => $markup,
-          '#prefix' => '<div class= "' . $class . '" id = "todo-item-wrapper-' . $key . '">'
-        ];
-        $form['todo_item_list']['item_list'][$item['id']]['actions'] = [
-          '#type' => 'actions',
-        ];
-        $form['todo_item_list']['item_list'][$item['id']]['actions']['complete'] = [
-          '#type' => 'button',
-          '#value' => $this->t('Complete'),
-          '#attributes' => [
-            'id' => 'complete-' . $item['id'],
-            'class' => ['todo-completed']
-          ]
-        ];
-        // $form['todo_item_list']['item_list'][$item['id']]['actions']['edit'] = [
-        //   '#type' => 'submit',
-        //   '#value' => $this->t('Edit'),
-        //   '#name' => 'edit-' . $key,
-        //   '#ajax' => [
-        //     "callback" => "::edit_todo_item_form",
-        //     "wrapper" => "todo-item-wrapper-" . $key,
-        //     'event' => 'click'
-        //   ]
-        // ];
-        $form['todo_item_list']['item_list'][$item['id']]['actions']['delete'] = [
-          '#type' => 'submit',
-          '#value' => $this->t('Delete'),
-          '#suffix' => '</div>',
-          '#attributes' => [
-            'id' => 'delete-' . $item['id'],
-            'class' => ['todo-delete']
-          ]
-        ];
+        if (!empty($edit_items) && in_array($key, $edit_items)) {
+          $form['todo_item_list']['item_list'][$key]['item'] = [
+            '#type' => 'fieldset',
+          ];
+          $form['todo_item_list']['item_list'][$key]['item']['edit-field'] = [
+            '#type' => 'textfield',
+            '#size' => '60',
+            '#attributes' => [
+              'id' => ['edit-output'],
+            ],
+            '#name' => 'edit-field-' . $key,
+            '#default_value' => $item['name']
+          ];
+          $form['todo_item_list']['item_list'][$key]['item']['edit-field-id'] = [
+            '#type' => 'hidden',
+            '#name' => 'edit-field-id-' . $key,
+            '#default_value' => $item['id']
+          ];
+          $form['todo_item_list']['item_list'][$key]['item']['update'] = [
+            '#type' => 'submit',
+            "#value" => $this->t("Update"),
+            "#submit" => ['::updateToDoValue'],
+            '#name' => 'update-' . $key,
+            '#ajax' => [
+              "callback" => "::add_more_todo_items",
+              "wrapper" => "edit-todo",
+              'event' => 'click'
+            ]
+          ];
+        } else {
+          $markup = $this->getItemMarkup($item);
+          $class = "todo-item";
+          $class .= $item['completed'] == 0 ? '' : ' inactive';
+          $form['todo_item_list']['item_list'][$key]['item'] = [
+            '#type' => 'markup',
+            '#markup' => $markup,
+            '#prefix' => '<div class= "' . $class . '" id = "todo-item-wrapper-' . $key . '">'
+          ];
+          $form['todo_item_list']['item_list'][$key]['actions'] = [
+            '#type' => 'actions',
+          ];
+          $form['todo_item_list']['item_list'][$key]['actions']['complete'] = [
+            '#type' => 'button',
+            '#value' => $this->t('Complete'),
+            '#attributes' => [
+              'id' => 'complete-' . $item['id'],
+              'class' => ['todo-completed']
+            ]
+          ];
+          $form['todo_item_list']['item_list'][$key]['actions']['edit'] = [
+            '#type' => 'submit',
+            '#value' => $this->t('Edit'),
+            '#name' => 'edit-' . $key,
+            '#submit' => ['::editToDoValue'],
+            '#ajax' => [
+              "callback" => "::add_more_todo_items",
+              "wrapper" => "edit-todo",
+              'event' => 'click'
+            ]
+          ];
+          $form['todo_item_list']['item_list'][$key]['actions']['delete'] = [
+            '#type' => 'submit',
+            '#value' => $this->t('Delete'),
+            '#suffix' => '</div>',
+            '#attributes' => [
+              'id' => 'delete-' . $item['id'],
+              'class' => ['todo-delete']
+            ]
+          ];
+        }
+        $form = array_merge_recursive($form, $list_form);
       }
       $form['actions'] = [
         '#type' => 'actions',
@@ -139,38 +172,6 @@ class ToDoListForm extends FormBase
     return $form;
   }
 
-  public function edit_todo_item_form(array &$form, FormStateInterface $form_state)
-  {
-    $element_key = $form_state->getTriggeringElement()['#parents'][2];
-    $edit_form['todo-item-edit'] = [
-      '#type' => 'fieldset',
-    ];
-    $edit_form['todo-item-edit']['edit-field'] = [
-      '#type' => 'textfield',
-      '#size' => '60',
-      '#attributes' => [
-        'id' => ['edit-output'],
-      ],
-    ];
-    $edit_form['todo-item-edit']['edit'] = [
-      '#type' => 'submit',
-      "#value" => $this->t("Update"),
-      "#submit" => ['::updateToDoValue'],
-      '#ajax' => [
-        "callback" => "::add_more_todo_items",
-        "wrapper" => "edit-todo",
-        'event' => 'click'
-      ]
-    ];
-
-    $renderer = \Drupal::service('renderer');
-    $renderedField = $renderer->render($edit_form);
-    $response = new AjaxResponse();
-    $response->addCommand(new ReplaceCommand('#todo-item-wrapper-' . $element_key, $renderedField));
-
-    return $response;
-  }
-
   public function getItemMarkup($item)
   {
     $markup = '';
@@ -183,23 +184,37 @@ class ToDoListForm extends FormBase
 
   public function getAllToDoItemList()
   {
-    $result = $this->connection->select('todo', 'td')->fields('td')->execute()->fetchAll($fetch = \PDO::FETCH_ASSOC);
+    $result = $this->connection->select('todo', 'td')->fields('td')->execute()->fetchAllAssoc('id', \PDO::FETCH_ASSOC);
     if (!empty($result)) {
+      ksort($result);
       return $result;
     } else {
       return FALSE;
     }
   }
 
-  public function updateToDoValue(array &$form, FormStateInterface $form_state)
+  public function editToDoValue(array &$form, FormStateInterface $form_state)
   {
+    $element_key = $form_state->getTriggeringElement()['#parents'][2];
+    $edit_items = !empty($form_state->get('edit_items')) ? $form_state->get('edit_items') : [];
+    $form_state->set('edit_items', $edit_items + [$element_key => $element_key]);
     $form_state->setRebuild(TRUE);
   }
 
-  public function add_more_todo_items(array &$form, FormStateInterface $form_state)
+  public function updateToDoValue(array &$form, FormStateInterface $form_state)
   {
-    $response = new AjaxResponse();
-    return $form['todo_item_list'];
+    $element_key = $form_state->getTriggeringElement()['#parents'][2];
+    $edit_items = $form_state->get('edit_items');
+    $values = $form_state->getUserInput();
+    $value = $values['edit-field-' . $element_key];
+    $id = $values['edit-field-id-' . $element_key];
+    $result = $this->connection->update('todo')->fields(['name' => $value])->condition('id', $id)->execute();
+    if ($result) {
+      unset($edit_items[$element_key]);
+      $form_state->set('edit_items', $edit_items);
+    }
+
+    $form_state->setRebuild(TRUE);
   }
 
   public function addToDoValue(array &$form, FormStateInterface $form_state)
@@ -211,6 +226,11 @@ class ToDoListForm extends FormBase
     }
 
     $form_state->setRebuild(TRUE);
+  }
+
+  public function add_more_todo_items(array &$form, FormStateInterface $form_state)
+  {
+    return $form['todo_item_list'];
   }
 
 
