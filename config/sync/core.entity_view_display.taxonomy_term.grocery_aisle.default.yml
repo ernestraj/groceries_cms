@@ -1,0 +1,30 @@
+uuid: 350b0113-29c0-475e-9264-a56330343cde
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.grocery_aisle.field_grocery_item
+    - taxonomy.vocabulary.grocery_aisle
+  module:
+    - text
+id: taxonomy_term.grocery_aisle.default
+targetEntityType: taxonomy_term
+bundle: grocery_aisle
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_grocery_item:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden: {  }

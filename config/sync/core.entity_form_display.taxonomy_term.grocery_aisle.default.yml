@@ -1,18 +1,16 @@
-uuid: aa2ae152-c28b-4bc8-9cf2-e3e267cb04c6
+uuid: bb58cfe2-c3e0-4b12-a2f9-23c18bfc33fa
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.store_location.field_grocery_aisle
-    - field.field.taxonomy_term.store_location.field_grocery_store_address
-    - taxonomy.vocabulary.store_location
+    - field.field.taxonomy_term.grocery_aisle.field_grocery_item
+    - taxonomy.vocabulary.grocery_aisle
   module:
-    - address
     - path
     - text
-id: taxonomy_term.store_location.default
+id: taxonomy_term.grocery_aisle.default
 targetEntityType: taxonomy_term
-bundle: store_location
+bundle: grocery_aisle
 mode: default
 content:
   description:
@@ -23,8 +21,8 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_grocery_aisle:
-    weight: 102
+  field_grocery_item:
+    weight: 101
     settings:
       match_operator: CONTAINS
       match_limit: 10
@@ -32,12 +30,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
-    region: content
-  field_grocery_store_address:
-    weight: 101
-    settings: {  }
-    third_party_settings: {  }
-    type: address_default
     region: content
   name:
     type: string_textfield
