@@ -8,7 +8,9 @@ use Drupal\views\Views;
 use Drupal\taxonomy\Entity\Term;
 use GuzzleHttp\Exception\RequestException;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Site\Settings;
+use \Drupal\node\Entity\Node;
 
 /**
  * Provides a resource to get view modes by entity and bundle.
@@ -17,7 +19,8 @@ use Drupal\Core\Site\Settings;
  *   id = "cmsCustomAction",
  *   label = @Translation("CMS Custom Rest Resource"),
  *   uri_paths = {
- *     "canonical" = "item/{nid}"
+ *     "canonical" = "item/{nid}",
+ *     "https://www.drupal.org/link-relations/create" = "item/create",
  *   }
  * )
  */
@@ -35,7 +38,7 @@ class StoreLocation extends ResourceBase
     $client = \Drupal::httpClient();
     $data = [];
     $view = Views::getView('stores');
-    $key = Settings::get('');
+    $key = Settings::get('cms_custom.google-api-key');
     if (is_object($view)) {
       $view->setDisplay('rest_export_1');
       $view->setArguments([$nid]);
@@ -64,5 +67,55 @@ class StoreLocation extends ResourceBase
       }
     }
     return new JsonResponse($data);
+  }
+
+  public function post($data)
+  {
+    if (empty($data["brand"]) || empty($data["address"]) || empty($data["grocery"]) || empty($data["grocery"])) {
+      return new JsonResponse(['message' => "Paylod is not correct"], 400);
+    }
+    if (!empty($data["brand_id"])) {
+      $brand = \Drupal::entityManager()->getStorage('taxonomy_term')->load($data["brand_id"]);
+    } else if (empty($brand)) {
+      $brand = Term::create([
+        'name' => Html::escape($data["brand"]),
+        'vid' => 'brand',
+      ])->save();
+    }
+
+    if (!empty($data["grocery_id"])) {
+      $grocery = \Drupal::entityManager()->getStorage('node')->load($data["grocery_id"]);
+    } else if (empty($grocery)) {
+      $grocery = Node::create([
+        'type' => 'groceries',
+        'title' => Html::escape($data["grocery"]),
+        'field_grocery_description' => Html::escape($data["description"])
+      ]);
+      $grocery->save();
+    }
+
+    if (!empty($data["aisle_id"])) {
+      $aisle = \Drupal::entityManager()->getStorage('taxonomy_term')->load($data["aisle_id"]);
+    } else if (empty($aisle)) {
+      $aisle = Term::create([
+        'name' => Html::escape($data["aisle"]),
+        'vid' => 'grocery_aisle',
+        'field_grocery_item' => [$grocery->id()]
+      ])->save();
+    }
+
+    if (!empty($data["address"])) {
+      $address = \Drupal::entityManager()->getStorage('taxonomy_term')->loadByProperties(["name" => $data["address"]]);
+      if (empty($address)) {
+        $address = Term::create([
+          'name' => Html::escape($data["address"]),
+          'vid' => 'store_location',
+          'field_brand' => $brand->id(),
+          'field_grocery_aisle' => [$aisle->id()]
+        ])->save();
+      }
+    }
+
+    return new JsonResponse(["message" => "Grocery Item has been created."], 200);
   }
 }
