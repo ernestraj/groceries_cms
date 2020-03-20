@@ -103,6 +103,15 @@ class StoreLocation extends ResourceBase
         'field_grocery_item' => [$grocery->id()]
       ])->save();
     }
+    $groceries = !empty($aisle->field_grocery_item) ? $aisle->field_grocery_item->getValue() : [];
+    if (!empty($groceries)) {
+      $groceries = call_user_func_array('array_merge', $groceries);
+      $groceries = array_values($groceries);
+    }
+    if (!in_array($grocery->id(), $groceries)) {
+      $aisle->field_grocery_item->appendItem($grocery->id());
+      $aisle->save();
+    }
 
     if (!empty($data["address"])) {
       $address = \Drupal::entityManager()->getStorage('taxonomy_term')->loadByProperties(["name" => $data["address"]]);
@@ -114,6 +123,16 @@ class StoreLocation extends ResourceBase
           'field_grocery_aisle' => [$aisle->id()]
         ])->save();
       }
+    }
+
+    $aisles = !empty($address[key($address)]->field_grocery_aisle) ? $address[key($address)]->field_grocery_aisle->getValue() : [];
+    if (!empty($aisles)) {
+      $aisles = call_user_func_array('array_merge', $aisles);
+      $aisles = array_values($aisles);
+    }
+    if (!in_array($aisle->id(), $aisles)) {
+      $address[key($address)]->field_grocery_aisle->appendItem($aisle->id());
+      $address[key($address)]->save();
     }
 
     return new JsonResponse(["message" => "Grocery Item has been created."], 200);
