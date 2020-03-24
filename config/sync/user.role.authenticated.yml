@@ -14,6 +14,8 @@ permissions:
   - 'access shortcuts'
   - 'access site-wide contact form'
   - 'post comments'
+  - 'restful get cmsCustomAction'
+  - 'restful post cmsCustomAction'
   - 'search content'
   - 'skip comment approval'
   - 'use text format basic_html'

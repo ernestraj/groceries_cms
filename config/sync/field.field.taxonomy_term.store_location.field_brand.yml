@@ -1,18 +1,18 @@
-uuid: 5f5ab981-82e5-4ac7-a653-b22cef6e8172
+uuid: 011049cb-9c8c-41f2-9ec9-6519c7e07f4a
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.taxonomy_term.field_grocery_aisle
-    - taxonomy.vocabulary.grocery_aisle
+    - field.storage.taxonomy_term.field_brand
+    - taxonomy.vocabulary.brand
     - taxonomy.vocabulary.store_location
-id: taxonomy_term.store_location.field_grocery_aisle
-field_name: field_grocery_aisle
+id: taxonomy_term.store_location.field_brand
+field_name: field_brand
 entity_type: taxonomy_term
 bundle: store_location
-label: 'Grocery Aisle'
+label: Brand
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      grocery_aisle: grocery_aisle
+      brand: brand
     sort:
       field: name
       direction: asc
