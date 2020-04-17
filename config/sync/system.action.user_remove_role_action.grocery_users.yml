@@ -1,0 +1,14 @@
+uuid: 5f957720-2704-4bbc-b02b-cbd50ca098d6
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.grocery_users
+  module:
+    - user
+id: user_remove_role_action.grocery_users
+label: 'Remove the Grocery Users role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: grocery_users

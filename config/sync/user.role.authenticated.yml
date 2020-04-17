@@ -16,6 +16,7 @@ permissions:
   - 'post comments'
   - 'restful get cmsCustomAction'
   - 'restful post cmsCustomAction'
+  - 'restful post user_registration'
   - 'search content'
   - 'skip comment approval'
   - 'use text format basic_html'

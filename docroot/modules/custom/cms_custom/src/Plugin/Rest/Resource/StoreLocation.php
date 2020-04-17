@@ -45,13 +45,19 @@ class StoreLocation extends ResourceBase
       $view->execute();
       foreach ($view->result as $rid => $row) {
         foreach ($view->field as $fid => $field) {
-          if (in_array($fid, ['field_brand', 'field_grocery_aisle'])) {
-            $term = Term::load($field->getValue($row));
+          $field_output = $view->style_plugin->getFieldValue($rid, $fid);
+
+          if ($fid == 'field_brand') {
+            $term = Term::load($field_output);
+            $name = $term->getName();
+            $data[$rid][$fid] = $name;
+          } elseif ($fid == 'field_grocery_aisle') {
+            $term = Term::load($field_output[0]);
             $name = $term->getName();
             $data[$rid][$fid] = $name;
           } elseif ($fid == 'name') {
             try {
-              $data[$rid][$fid] = $field->getValue($row);
+              $data[$rid][$fid] = $field_output;
               $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' . $latitude . ',' . $longitude . '&destinations=' . UrlHelper::encodePath($field->getValue($row)) . '&key=' . $key;
               $response = $client->get($url);
               $json_response = json_decode($response->getBody(), TRUE);

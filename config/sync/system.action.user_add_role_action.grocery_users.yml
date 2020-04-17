@@ -1,0 +1,14 @@
+uuid: 13603a67-2fa7-4260-825b-cde92f254b85
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.grocery_users
+  module:
+    - user
+id: user_add_role_action.grocery_users
+label: 'Add the Grocery Users role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: grocery_users

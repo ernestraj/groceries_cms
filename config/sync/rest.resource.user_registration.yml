@@ -1,0 +1,18 @@
+uuid: bbba5fbf-d19f-4e28-9778-5909e34fd234
+langcode: en
+status: true
+dependencies:
+  module:
+    - serialization
+    - simple_oauth
+    - user
+id: user_registration
+plugin_id: user_registration
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - oauth2

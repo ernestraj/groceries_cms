@@ -24,7 +24,8 @@
         "drupal/core-recommended": "^8.8",
         "drupal/devel": "^2.1",
         "drupal/graphql": "^3.0",
-        "drupal/restui": "^1.17"
+        "drupal/restui": "^1.17",
+        "drupal/simple_oauth": "^4.4"
     },
     "require-dev": {
     },
