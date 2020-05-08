@@ -1,0 +1,3 @@
+.todo-item.inactive .item span {
+  text-decoration: line-through;
+}

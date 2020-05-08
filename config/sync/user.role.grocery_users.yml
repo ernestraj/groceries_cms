@@ -1,0 +1,22 @@
+uuid: 35d3dbe7-d256-44f2-b74c-b65de107ea12
+langcode: en
+status: true
+dependencies: {  }
+id: grocery_users
+label: 'Grocery Users'
+weight: 3
+is_admin: null
+permissions:
+  - 'access user profiles'
+  - 'add simple_oauth entities'
+  - 'change own username'
+  - 'create groceries content'
+  - 'create terms in brand'
+  - 'create terms in grocery_aisle'
+  - 'create terms in store_location'
+  - 'edit any groceries content'
+  - 'edit terms in grocery_aisle'
+  - 'edit terms in store_location'
+  - 'edit terms in tags'
+  - 'restful get cmsCustomAction'
+  - 'restful post cmsCustomAction'

@@ -1,16 +1,16 @@
-uuid: cea4c1a0-c503-413f-8805-d336c88c2f8c
+uuid: 693a277d-07e1-45fa-bb30-0d3ca3387737
 langcode: en
 status: true
 dependencies:
   module:
-    - address
     - taxonomy
-id: taxonomy_term.field_grocery_store_address
-field_name: field_grocery_store_address
+id: taxonomy_term.field_brand
+field_name: field_brand
 entity_type: taxonomy_term
-type: address
-settings: {  }
-module: address
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
 locked: false
 cardinality: 1
 translatable: true

@@ -1,0 +1,48 @@
+uuid: 04e4e897-f697-436a-b568-3e990784a491
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.dish.field_description
+    - field.field.node.dish.field_image
+    - field.field.node.dish.field_ingredients
+    - node.type.dish
+  module:
+    - image
+    - text
+    - user
+id: node.dish.default
+targetEntityType: node
+bundle: dish
+mode: default
+content:
+  field_description:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_image:
+    weight: 102
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_ingredients:
+    weight: 103
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

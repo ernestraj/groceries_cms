@@ -3,10 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.store_location.field_grocery_store_address
+    - field.field.taxonomy_term.store_location.field_brand
+    - field.field.taxonomy_term.store_location.field_grocery_aisle
     - taxonomy.vocabulary.store_location
   module:
-    - address
     - path
     - text
 id: taxonomy_term.store_location.default
@@ -22,11 +22,25 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_grocery_store_address:
-    weight: 101
-    settings: {  }
+  field_brand:
+    weight: 103
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: address_default
+    type: entity_reference_autocomplete
+    region: content
+  field_grocery_aisle:
+    weight: 102
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   name:
     type: string_textfield

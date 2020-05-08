@@ -1,0 +1,18 @@
+uuid: 36310b80-4625-488c-b72b-b07222d5ee7e
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Dish
+type: dish
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: true

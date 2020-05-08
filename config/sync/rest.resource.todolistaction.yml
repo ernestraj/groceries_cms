@@ -1,0 +1,19 @@
+uuid: 407048d7-f807-409a-9060-1a6594e1561c
+langcode: en
+status: true
+dependencies:
+  module:
+    - serialization
+    - todolist
+    - user
+id: todolistaction
+plugin_id: todolistaction
+granularity: resource
+configuration:
+  methods:
+    - PUT
+    - DELETE
+  formats:
+    - json
+  authentication:
+    - cookie

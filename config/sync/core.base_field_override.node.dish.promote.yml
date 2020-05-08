@@ -1,0 +1,22 @@
+uuid: 5de5f4aa-1863-4a53-994e-3ad876e6b7fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.dish
+id: node.dish.promote
+field_name: promote
+entity_type: node
+bundle: dish
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

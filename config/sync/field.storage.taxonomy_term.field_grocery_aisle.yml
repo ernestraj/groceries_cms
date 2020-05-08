@@ -1,0 +1,19 @@
+uuid: 34d29f34-2afa-4623-82ed-56737fa3511f
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.field_grocery_aisle
+field_name: field_grocery_aisle
+entity_type: taxonomy_term
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

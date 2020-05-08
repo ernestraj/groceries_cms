@@ -1,0 +1,19 @@
+uuid: fbfb3d07-f0da-4b25-ae26-f18ecf2fe857
+langcode: en
+status: true
+dependencies:
+  module:
+    - cms_custom
+    - serialization
+    - user
+id: cmsCustomAction
+plugin_id: cmsCustomAction
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+  formats:
+    - json
+  authentication:
+    - cookie

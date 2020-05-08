@@ -2,6 +2,9 @@ todolist:
   version: VERSION
   js:
     js/todolist.js: { preprocess: false }
+  css:
+    theme:
+      css/todolist.css: {}
   dependencies:
     - core/drupal
     - core/jquery

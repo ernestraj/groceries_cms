@@ -1,0 +1,29 @@
+uuid: 5f5ab981-82e5-4ac7-a653-b22cef6e8172
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_grocery_aisle
+    - taxonomy.vocabulary.grocery_aisle
+    - taxonomy.vocabulary.store_location
+id: taxonomy_term.store_location.field_grocery_aisle
+field_name: field_grocery_aisle
+entity_type: taxonomy_term
+bundle: store_location
+label: 'Grocery Aisle'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      grocery_aisle: grocery_aisle
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

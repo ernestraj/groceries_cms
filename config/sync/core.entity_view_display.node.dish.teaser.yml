@@ -1,0 +1,26 @@
+uuid: d07271cb-aca8-41ff-880e-55a8a1cfdf5a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.dish.field_description
+    - field.field.node.dish.field_image
+    - field.field.node.dish.field_ingredients
+    - node.type.dish
+  module:
+    - user
+id: node.dish.teaser
+targetEntityType: node
+bundle: dish
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_description: true
+  field_image: true
+  field_ingredients: true
