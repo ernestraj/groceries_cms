@@ -23,7 +23,10 @@
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
         "drupal/devel": "^2.1",
+<<<<<<< HEAD
         "drupal/email_registration": "^1.0",
+=======
+>>>>>>> bd7ebd9f7d917f2f035314b518bde23d22b06280
         "drupal/graphql": "^3.0",
         "drupal/restui": "^1.17",
         "drupal/simple_oauth": "^4.4"
