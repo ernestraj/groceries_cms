@@ -21,7 +21,6 @@ module:
   devel: 0
   dynamic_page_cache: 0
   editor: 0
-  email_registration: 0
   field: 0
   field_ui: 0
   file: 0
@@ -29,10 +28,12 @@ module:
   graphql: 0
   graphql_core: 0
   help: 0
+  helper: 0
   history: 0
   image: 0
   kint: 0
   link: 0
+  mailsystem: 0
   menu_ui: 0
   node: 0
   options: 0
@@ -42,8 +43,10 @@ module:
   quickedit: 0
   rdf: 0
   rest: 0
+  rest_register_verify_email: 0
   restui: 0
   search: 0
+  sendgrid_integration: 0
   serialization: 0
   shortcut: 0
   simple_oauth: 0
@@ -51,10 +54,12 @@ module:
   taxonomy: 0
   text: 0
   todolist: 0
+  token: 0
   toolbar: 0
   tour: 0
   update: 0
   user: 0
+  user_registrationpassword: 0
   views_ui: 0
   menu_link_content: 1
   views: 10

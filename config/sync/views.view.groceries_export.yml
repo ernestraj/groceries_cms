@@ -347,7 +347,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-<<<<<<< HEAD
   rest_export_2:
     display_plugin: rest_export
     id: rest_export_2
@@ -652,5 +651,3 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_ingredients'
-=======
->>>>>>> bd7ebd9f7d917f2f035314b518bde23d22b06280

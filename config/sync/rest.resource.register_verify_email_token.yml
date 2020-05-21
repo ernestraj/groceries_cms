@@ -1,19 +1,17 @@
-uuid: fbfb3d07-f0da-4b25-ae26-f18ecf2fe857
+uuid: 5fc0a1fc-97ce-40da-a956-8b90f1883e22
 langcode: en
 status: true
 dependencies:
   module:
-    - cms_custom
+    - rest_register_verify_email
     - serialization
-    - simple_oauth
-id: cmsCustomAction
-plugin_id: cmsCustomAction
+id: register_verify_email_token
+plugin_id: register_verify_email_token
 granularity: resource
 configuration:
   methods:
-    - GET
     - POST
   formats:
     - json
   authentication:
-    - oauth2
+    - Na

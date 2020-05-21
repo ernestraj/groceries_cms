@@ -1,0 +1,12 @@
+apikey: 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
+test_defaults:
+  to: tajinders.minhas+3@gmail.com
+  subject: 'Test Email from SendGrid Module'
+  body:
+    value: "<p><strong>Test Message for SendGrid.</strong></p>\r\n"
+    format: full_html
+  from_name: ''
+  to_name: ''
+  reply_to: ''
+_core:
+  default_config_hash: g4qz7cPnloXFwtnLYfIKI2VS0gf_UFOz_I2uQiiulC8

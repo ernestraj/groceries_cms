@@ -1,19 +1,17 @@
-uuid: 25f89b09-f1f5-40e4-8680-cf5bac9509ce
+uuid: 0678bf66-f93b-4695-8164-000b5ccca402
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - serialization
     - simple_oauth
-id: entity.oauth2_token
-plugin_id: 'entity:oauth2_token'
+    - taxonomy
+id: entity.taxonomy_term
+plugin_id: 'entity:taxonomy_term'
 granularity: resource
 configuration:
   methods:
     - GET
-    - POST
-    - DELETE
-    - PATCH
   formats:
     - json
   authentication:
