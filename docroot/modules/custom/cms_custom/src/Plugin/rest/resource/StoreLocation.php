@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cms_custom\Plugin\Rest\Resource;
+namespace Drupal\cms_custom\Plugin\rest\resource;
 
 use Drupal\rest\Plugin\ResourceBase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +16,7 @@ use \Drupal\node\Entity\Node;
  * Provides a resource to get view modes by entity and bundle.
  *
  * @RestResource (
- *   id = "cmsCustomAction",
+ *   id = "cms_custom_action",
  *   label = @Translation("CMS Custom Rest Resource"),
  *   uri_paths = {
  *     "canonical" = "item/{nid}",

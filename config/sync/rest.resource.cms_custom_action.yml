@@ -1,18 +1,19 @@
-uuid: 607760f7-e620-4ecd-8313-fa382a07fb38
+uuid: 0da03e85-0a5f-4e95-a7d0-aae21a4109d3
 langcode: en
-status: false
+status: true
 dependencies:
   module:
-    - basic_auth
     - cms_custom
     - serialization
-id: cmsCustomUserData
-plugin_id: cmsCustomUserData
+    - simple_oauth
+id: cms_custom_action
+plugin_id: cms_custom_action
 granularity: resource
 configuration:
   methods:
     - GET
+    - POST
   formats:
     - json
   authentication:
-    - basic_auth
+    - oauth2
