@@ -45,11 +45,17 @@ parameters:
         "origin",
         "x-requested-with",
         "access-control-allow-origin",
+        "User-Agent",
+        "Referer",
+        "Host",
+        "Accept-Encoding",
+        "Connection",
+        "Accept-Language",
       ]
     # Specify allowed request methods, specify ['*'] to allow all possible ones.
     allowedMethods: ["*"]
     # Configure requests allowed from specific origins.
-    allowedOrigins: ["*"]
+    allowedOrigins: ["http://localhost:5000"]
     # Sets the Access-Control-Expose-Headers header.
     exposedHeaders: false
     # Sets the Access-Control-Max-Age header.

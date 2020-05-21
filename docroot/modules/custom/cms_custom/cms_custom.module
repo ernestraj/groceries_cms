@@ -1,0 +1,18 @@
+<?php
+
+use Drupal\Core\Render\BubbleableMetadata;
+
+/**
+ * Implements hook_token_alter
+ */
+function cms_custom_mail_alter(&$message) {
+  if ($message['id'] == 'user_registrationpassword_register_confirmation_with_pass') {
+    $mailbody = '';
+    //\Drupal::logger('cms_custom')->notice('testing');
+    foreach($message['body'] as $key => $item) {
+      $mailbody = str_replace('http://local.groceries-cms.com', 'http://localhost:5000', $item);
+      unset($message['body'][$key]);
+    }
+    $message['body'][] = $mailbody;
+  }
+}
