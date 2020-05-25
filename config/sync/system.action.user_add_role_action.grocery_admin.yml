@@ -1,0 +1,14 @@
+uuid: f79ee144-1059-4b54-804e-f019b2291ce8
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.grocery_admin
+  module:
+    - user
+id: user_add_role_action.grocery_admin
+label: 'Add the Grocery Admin role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: grocery_admin

@@ -1,0 +1,14 @@
+htmlmail_debug: false
+hmtlmail_theme: ''
+htmlmail_html_with_plain: false
+htmlmail_use_mime_mail: false
+htmlmail_postfilter: '0'
+htmlmail_test:
+  to: tajinders.minhas@gmail.com
+  subject: 'subject test'
+  body:
+    value: "<p><em><strong>body test</strong></em></p>\r\n"
+    format: basic_html
+  class: htmlmail
+_core:
+  default_config_hash: Wu3IKMk26-vsOrYw0-gdQelLF90-LJG4ce9mvT9zooE

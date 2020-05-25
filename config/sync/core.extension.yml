@@ -28,10 +28,10 @@ module:
   help: 0
   helper: 0
   history: 0
+  htmlmail: 0
   image: 0
   kint: 0
   link: 0
-  language: 0
   mailsystem: 0
   menu_ui: 0
   node: 0

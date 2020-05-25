@@ -24,3 +24,4 @@ hidden:
   field_description: true
   field_image: true
   field_ingredients: true
+  langcode: true

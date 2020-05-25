@@ -22,3 +22,4 @@ content:
 hidden:
   field_grocery_description: true
   field_grocery_estimated_price: true
+  langcode: true

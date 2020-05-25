@@ -1,0 +1,14 @@
+uuid: b6ab3f21-f133-4795-9067-8fb3be9ab978
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.grocery_admin
+  module:
+    - user
+id: user_remove_role_action.grocery_admin
+label: 'Remove the Grocery Admin role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: grocery_admin
