@@ -1,5 +1,5 @@
-access_token_expiration: 60
-authorization_code_expiration: 300
+access_token_expiration: 600
+authorization_code_expiration: 600
 refresh_token_expiration: 1209600
 remember_clients: true
 token_cron_batch_size: 0

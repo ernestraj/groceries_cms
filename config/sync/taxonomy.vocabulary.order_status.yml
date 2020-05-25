@@ -1,0 +1,8 @@
+uuid: b4091e41-d7c8-455b-b028-9f2bd8cddaa4
+langcode: en
+status: true
+dependencies: {  }
+name: 'Order Status'
+vid: order_status
+description: ''
+weight: 0

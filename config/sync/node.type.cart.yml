@@ -1,0 +1,18 @@
+uuid: 27bc18be-9ab2-4515-80c5-23f643c2d85d
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Cart
+type: cart
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

@@ -1,0 +1,46 @@
+uuid: f03edd3d-75b5-4e1d-8e38-9b9f0c7788c3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.cart.field_dish
+    - field.field.node.cart.field_grocery
+    - field.field.node.cart.field_order_status
+    - node.type.cart
+  module:
+    - user
+id: node.cart.default
+targetEntityType: node
+bundle: cart
+mode: default
+content:
+  field_dish:
+    weight: 102
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_grocery:
+    weight: 103
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_order_status:
+    weight: 101
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

@@ -1,0 +1,26 @@
+uuid: 250f1a14-0157-4a70-949a-d859b94ebbb1
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.cart.field_dish
+    - field.field.node.cart.field_grocery
+    - field.field.node.cart.field_order_status
+    - node.type.cart
+  module:
+    - user
+id: node.cart.teaser
+targetEntityType: node
+bundle: cart
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_dish: true
+  field_grocery: true
+  field_order_status: true
