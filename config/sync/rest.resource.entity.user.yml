@@ -1,6 +1,6 @@
 uuid: 685bb9b3-5ab7-443d-bb4b-a21d4e4e9bfb
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - serialization
