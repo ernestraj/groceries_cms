@@ -32,6 +32,7 @@
         "drupal/restui": "^1.17",
         "drupal/sendgrid_integration": "^1.2",
         "drupal/simple_oauth": "^4.4",
+        "drupal/smtp": "^1.0@RC",
         "drupal/token": "^1.7",
         "drupal/user_registrationpassword": "^1.0@alpha",
         "drush/drush": "^10.2"
