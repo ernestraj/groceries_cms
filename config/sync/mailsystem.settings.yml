@@ -1,7 +1,7 @@
 theme: current
 defaults:
-  sender: sendgrid_integration
-  formatter: htmlmail
+  sender: php_mail
+  formatter: php_mail
 _core:
   default_config_hash: IhwTepsVwtbtbcT5GzQKhCXDCRvbk3MNkWqPiuiZ10s
 modules:
@@ -9,3 +9,7 @@ modules:
     none:
       formatter: htmlmail
       sender: sendgrid_integration
+  swiftmailer:
+    none:
+      formatter: swiftmailer
+      sender: swiftmailer

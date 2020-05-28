@@ -13,6 +13,8 @@ module:
   color: 0
   comment: 0
   config: 0
+  config_filter: 0
+  config_ignore: 0
   consumers: 0
   contact: 0
   contextual: 0
@@ -28,7 +30,6 @@ module:
   help: 0
   helper: 0
   history: 0
-  htmlmail: 0
   image: 0
   kint: 0
   link: 0
@@ -45,11 +46,10 @@ module:
   rest_register_verify_email: 0
   restui: 0
   search: 0
-  sendgrid_integration: 0
   serialization: 0
   shortcut: 0
   simple_oauth: 0
-  smtp: 0
+  swiftmailer: 0
   system: 0
   taxonomy: 0
   text: 0
