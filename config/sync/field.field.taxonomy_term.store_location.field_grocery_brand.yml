@@ -1,0 +1,29 @@
+uuid: 437a70f9-7ab2-4bec-9c9a-0d7c6252358c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_grocery_brand
+    - taxonomy.vocabulary.grocery_brand
+    - taxonomy.vocabulary.store_location
+id: taxonomy_term.store_location.field_grocery_brand
+field_name: field_grocery_brand
+entity_type: taxonomy_term
+bundle: store_location
+label: 'Grocery Brand'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      grocery_brand: grocery_brand
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

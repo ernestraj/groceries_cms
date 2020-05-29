@@ -1,0 +1,52 @@
+uuid: 0ed3dda9-b3dd-44ea-a185-f8eeeb0e45e3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.grocery_brand.field_available
+    - taxonomy.vocabulary.grocery_brand
+  module:
+    - path
+    - text
+id: taxonomy_term.grocery_brand.default
+targetEntityType: taxonomy_term
+bundle: grocery_brand
+mode: default
+content:
+  description:
+    type: text_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_available:
+    weight: 101
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  name:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 100
+    region: content
+    third_party_settings: {  }
+hidden: {  }

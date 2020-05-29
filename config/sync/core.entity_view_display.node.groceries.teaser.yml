@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.groceries.field_grocery_brand
     - field.field.node.groceries.field_grocery_description
     - field.field.node.groceries.field_grocery_estimated_price
     - node.type.groceries
@@ -20,6 +21,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_grocery_brand: true
   field_grocery_description: true
   field_grocery_estimated_price: true
-  langcode: true

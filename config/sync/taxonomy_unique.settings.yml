@@ -1,0 +1,8 @@
+grocery_brand: 1
+grocery_brand_message: 'Term @term already exists in vocabulary @vocabulary.'
+brand: 1
+brand_message: 'Term @term already exists in vocabulary @vocabulary.'
+store_location: 1
+store_location_message: 'Term @term already exists in vocabulary @vocabulary.'
+grocery_aisle: 1
+grocery_aisle_message: 'Term @term already exists in vocabulary @vocabulary.'

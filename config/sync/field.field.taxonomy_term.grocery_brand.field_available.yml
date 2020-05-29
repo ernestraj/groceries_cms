@@ -1,0 +1,23 @@
+uuid: 6188d6b8-04b2-4c0b-8bdb-211afb7d88e3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_available
+    - taxonomy.vocabulary.grocery_brand
+id: taxonomy_term.grocery_brand.field_available
+field_name: field_available
+entity_type: taxonomy_term
+bundle: grocery_brand
+label: Available
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

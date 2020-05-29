@@ -1,0 +1,8 @@
+uuid: 0f309a7b-c023-409d-a0d7-e2ebf79df93e
+langcode: en
+status: true
+dependencies: {  }
+name: 'Grocery Brand'
+vid: grocery_brand
+description: ''
+weight: 0
