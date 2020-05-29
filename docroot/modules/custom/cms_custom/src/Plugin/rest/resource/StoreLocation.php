@@ -78,7 +78,7 @@ class StoreLocation extends ResourceBase
   public function post($data)
   {
     if (empty($data["brand"]) || empty($data["address"]) || empty($data["grocery"]) || empty($data["grocery"])) {
-      return new JsonResponse(['message' => "Paylod is not correct"], 400);
+      return new JsonResponse(['message' => "Payload is not correct"], 400);
     }
     if (!empty($data["brand_id"])) {
       $brand = \Drupal::entityManager()->getStorage('taxonomy_term')->load($data["brand_id"]);
@@ -87,6 +87,21 @@ class StoreLocation extends ResourceBase
         'name' => Html::escape($data["brand"]),
         'vid' => 'brand',
       ])->save();
+      $brand_term_name = \Drupal::entityManager()->getStorage('taxonomy_term')->loadByProperties(["name" => $data["brand"]]);
+      $brand = $brand_term_name[key($brand_term_name)];
+    }
+
+    if (!empty($data["grocery_brand_id"])) {
+      $grocery_brand =  \Drupal::entityManager()->getStorage('taxonomy_term')->load($data["grocery_brand_id"]);
+    }
+    else if(empty($grocery_brand)) {
+      $grocery_brand = Term::create([
+        'name' => Html::escape($data["grocery_brand"]),
+        'vid' => 'grocery_brand',
+        'field_available' => 1
+      ])->save();
+      $grocery_brand_term_name = \Drupal::entityManager()->getStorage('taxonomy_term')->loadByProperties(["name" => $data["grocery_brand"]]);
+      $grocery_brand = $grocery_brand_term_name[key($grocery_brand_term_name)];
     }
 
     if (!empty($data["grocery_id"])) {
@@ -95,7 +110,8 @@ class StoreLocation extends ResourceBase
       $grocery = Node::create([
         'type' => 'groceries',
         'title' => Html::escape($data["grocery"]),
-        'field_grocery_description' => Html::escape($data["description"])
+        'field_grocery_description' => Html::escape($data["description"]),
+        'field_grocery_brand' => [$grocery_brand->id()]
       ]);
       $grocery->save();
     }
@@ -108,15 +124,8 @@ class StoreLocation extends ResourceBase
         'vid' => 'grocery_aisle',
         'field_grocery_item' => [$grocery->id()]
       ])->save();
-    }
-    $groceries = !empty($aisle->field_grocery_item) ? $aisle->field_grocery_item->getValue() : [];
-    if (!empty($groceries)) {
-      $groceries = call_user_func_array('array_merge', $groceries);
-      $groceries = array_values($groceries);
-    }
-    if (!in_array($grocery->id(), $groceries)) {
-      $aisle->field_grocery_item->appendItem($grocery->id());
-      $aisle->save();
+      $aisle_term_name = \Drupal::entityManager()->getStorage('taxonomy_term')->loadByProperties(["name" => $data["aisle"]]);
+      $aisle = $aisle_term_name[key($aisle_term_name)];
     }
 
     if (!empty($data["address"])) {
@@ -126,9 +135,21 @@ class StoreLocation extends ResourceBase
           'name' => Html::escape($data["address"]),
           'vid' => 'store_location',
           'field_brand' => $brand->id(),
-          'field_grocery_aisle' => [$aisle->id()]
+          'field_grocery_aisle' => [$aisle->id()],
+          'field_grocery_brand' => [$grocery_brand->id()]
         ])->save();
+        $address = \Drupal::entityManager()->getStorage('taxonomy_term')->loadByProperties(["name" => $data["address"]]);
       }
+    }
+
+    $groceries = !empty($aisle->field_grocery_item) ? $aisle->field_grocery_item->getValue() : [];
+    if (!empty($groceries)) {
+      $groceries = call_user_func_array('array_merge', $groceries);
+      $groceries = array_values($groceries);
+    }
+    if (!in_array($grocery->id(), $groceries)) {
+      $aisle->field_grocery_item->appendItem($grocery->id());
+      $aisle->save();
     }
 
     $aisles = !empty($address[key($address)]->field_grocery_aisle) ? $address[key($address)]->field_grocery_aisle->getValue() : [];
