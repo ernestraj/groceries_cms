@@ -11,6 +11,10 @@ use Drupal\Component\Utility\UrlHelper;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Site\Settings;
 use \Drupal\node\Entity\Node;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Psr\Log\LoggerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 
 /**
  * Provides a resource to get view modes by entity and bundle.
@@ -19,7 +23,7 @@ use \Drupal\node\Entity\Node;
  *   id = "cms_custom_action",
  *   label = @Translation("CMS Custom Rest Resource"),
  *   uri_paths = {
- *     "canonical" = "item/{nid}",
+ *     "canonical" = "item",
  *     "https://www.drupal.org/link-relations/create" = "item/create",
  *   }
  * )
@@ -28,20 +32,66 @@ class StoreLocation extends ResourceBase
 {
 
   /**
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
+   */
+  protected $currentRequest;
+
+  /**
+   * Constructs a Drupal\rest\Plugin\ResourceBase object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param array $serializer_formats
+   *   The available serialization formats.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   A logger instance.
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   *   The current user instance.
+   * @param Symfony\Component\HttpFoundation\Request $current_request
+   *   The current request
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, array $serializer_formats, LoggerInterface $logger, AccountProxyInterface $current_user, Request $current_request) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger); 
+    $this->currentRequest = $current_request;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->getParameter('serializer.formats'),
+      $container->get('logger.factory')->get('example_rest'),
+      $container->get('current_user'),
+      $container->get('request_stack')->getCurrentRequest()
+    );
+  }
+
+  /**
    * Responds to delete requests.
    */
 
-  public function get($nid)
+  public function get()
   {
-    $latitude = \Drupal::request()->query->get('latitude');
-    $longitude = \Drupal::request()->query->get('longitude');
+    $query_parameters = $this->currentRequest->query->get('nid');
+    $args = str_replace(" ", "+", $query_parameters);
+    $latitude = $this->currentRequest->query->get('latitude');
+    $longitude = $this->currentRequest->query->get('longitude');
     $client = \Drupal::httpClient();
     $data = [];
     $view = Views::getView('stores');
     $key = Settings::get('cms_custom.google-api-key');
     if (is_object($view)) {
       $view->setDisplay('rest_export_1');
-      $view->setArguments([$nid]);
+      $view->setArguments([$args]);
       $view->execute();
       foreach ($view->result as $rid => $row) {
         foreach ($view->field as $fid => $field) {
