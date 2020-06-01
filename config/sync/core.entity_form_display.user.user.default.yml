@@ -6,6 +6,8 @@ dependencies:
     - field.field.user.user.field_first_name
     - field.field.user.user.field_last_name
     - field.field.user.user.field_middle_name
+    - field.field.user.user.field_privacy_policy
+    - field.field.user.user.field_terms_and_conditions
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -48,6 +50,20 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_privacy_policy:
+    weight: 10
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_terms_and_conditions:
+    weight: 11
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
   language:
     weight: 0
     region: content
@@ -62,5 +78,4 @@ content:
     third_party_settings: {  }
     weight: -1
     region: content
-hidden:
-  langcode: true
+hidden: {  }

@@ -1,0 +1,24 @@
+uuid: 1cf9691b-c332-4463-9874-80d739d05118
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_terms_and_conditions
+  module:
+    - user
+id: user.user.field_terms_and_conditions
+field_name: field_terms_and_conditions
+entity_type: user
+bundle: user
+label: 'Terms and Conditions'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

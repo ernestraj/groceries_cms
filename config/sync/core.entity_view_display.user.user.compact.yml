@@ -7,6 +7,8 @@ dependencies:
     - field.field.user.user.field_first_name
     - field.field.user.user.field_last_name
     - field.field.user.user.field_middle_name
+    - field.field.user.user.field_privacy_policy
+    - field.field.user.user.field_terms_and_conditions
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -32,5 +34,6 @@ hidden:
   field_first_name: true
   field_last_name: true
   field_middle_name: true
-  langcode: true
+  field_privacy_policy: true
+  field_terms_and_conditions: true
   member_for: true
